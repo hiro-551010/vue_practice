@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>computed</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <div id="app">
+        <p>{{ counter }}</p>
+        <button @click="counter += 1">+1</button>
+        <p>{{ othercounter }}</p>
+        <button @click="othercounter += 1">別の+1</button>
+        <!-- 二重波括弧を使って、computedとmethodsを表現する際は、methodsは()が必ず必要 -->
+        <p>{{ lessThanThreeComputed }}</p>
+        <p>{{ lessThanThreeMethod() }}</p>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                counter: 0,
+                othercounter: 0,
+            },
+            // dataプロパティは静的なものしか扱えないので、動的なものを扱う場合は、computedプロパティを使う
+            // その中で関数を扱うが、returnが必須
+            // 関係のあるものがなければ発動しない
+            // つまり、動的なプロパティを使う場合は、基本的にcomputedを使いましょう
+            computed: {
+                lessThanThreeComputed: function() {
+                    console.log('Computed')
+                    return this.counter > 3 ? '3より上': '3以下'
+                }
+            },
+            //検証でlogを確認すると、関係ないothercounterでもmethodの関数が発動する
+            //再描画されるたびにmethodsは発動する
+            methods: {
+                lessThanThreeMethod: function() {
+                    console.log('Methods')
+                    return this.counter > 3 ? '3より上': '3以下'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

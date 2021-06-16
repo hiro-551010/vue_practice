@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-for2</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <div id="app">
+        <ul>
+            <div v-for="fruit in fruits">
+                <p>{{fruit}}</p>
+                <input type="text">
+            </div>
+        </ul>
+        <button @click="remove">先頭を削除</button>
+    </div>
+    
+    <!-- key属性を使う場合はtemplateタグは使えない -->
+    <!-- keyをindexとすると、配列の順番も変わるので、使えない -->
+    <!-- v-forを使う場合はkey属性を必ず使用する -->
+    <div id="app2">
+        <ul>
+            <div v-for="fruit in fruits" :key="fruit">
+                <p>{{fruit}}</p>
+                <input type="text">
+            </div>
+        </ul>
+        <button @click="remove">先頭を削除</button>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                fruits: ["りんご", "バナナ", "ぶどう"]
+            },
+            methods: {
+                remove: function() {
+                    this.fruits.shift()
+                }
+            }
+        })
+        new Vue({
+            el: "#app2",
+            data: {
+                fruits: ["りんご", "バナナ", "ぶどう"]
+            },
+            methods: {
+                remove: function() {
+                    this.fruits.shift()
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>

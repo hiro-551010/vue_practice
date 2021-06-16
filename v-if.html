@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-if</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <div id="app">
+        <!-- v-elseはv-ifかv-else-ifのすぐ下に書かなければいけない -->
+        <p v-if="ok">OK</p>
+        <p v-else-if="maybeOK">maybe OK</p>
+        <p v-else>Not OK</p>
+        <button @click="ok = !ok">切り替え</button>
+        <button @click="maybeOK = !maybeOK">もうまじ無理</button>
+        <!-- templateはグループ化することができる -->
+        <template v-if="ok">
+            <p>Hello</p>
+            <p>GoodBye</p>
+        </template>
+        <!-- v-showは、templateには適用できない、v-else等もない -->
+        <!-- 描画コストが高いが、v-ifよりは、切り替えの描画コストは低い -->
+        <p v-show="ok">show</p>
+    </div>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                ok: true,
+                maybeOK: true,
+            }
+        })
+    </script>
+</body>
+</html>

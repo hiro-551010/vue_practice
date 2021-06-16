@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-on</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <div id="app">
+        <!-- @clickとしても動作する。@でv-onを省略 -->
+        <p>現在{{ number }}回クリックされています</p>
+        <button v-on:click="countUp(2)">カウントアップ</button>
+
+        <!-- eventがある関数で、第二引数に取るときは$をつける -->
+        <p v-on:mousemove="changeMousePosition(10, $event)">マウスを乗せてください
+            <!-- <span v-on:mousemove="noEvent">反応しないでください</span> -->
+            <span v-on:mousemove.stop>反応しないでください</span>
+            <a v-on:click="noEvent" href="https://google.com">Google</a>
+        </p>
+        <p>X:{{x}}, Y:{{y}}</p>
+
+        <!-- enterはenterを押された時のみ関数が発動する -->
+        <input type="text" v-on:keyup.enter="myAlert">
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                number: 0,
+                x: 0,
+                y: 0,
+            },
+            methods: {
+                countUp: function(times) {
+                    this.number += 1 * times
+                },
+                changeMousePosition: function(divideNumber, event) {
+                    this.x = event.clientX / divideNumber;
+                    this.y = event.clientY / divideNumber;
+                },
+                // 反応を止めたい関数を書いてもいいが、.stopで省略できる。 stopは情報を伝えない。
+                // noEvent: function(event) {
+                //     event.stopPropagation()
+                // }
+                noEvent: function(event) {
+                    //通常の挙動を妨げる。これもよく使われるので、event修飾子の.preventがある
+                    event.preventDefault();
+                },
+                myAlert() {
+                    alert('アラート');
+                }
+            }
+        })
+    </script>
+</body>
+</html>

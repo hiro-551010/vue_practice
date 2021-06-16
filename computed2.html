@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>computed2</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <div id="app">
+        <p>{{ counter }}</p>
+        <button @click="counter += 1">+1</button>
+        <p>{{ lessThanThree }}</p>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                counter: 0,
+            },
+            computed: {
+                lessThanThree: function() {
+                    return this.counter > 3 ? "３より上": "３以下";
+                }
+            },
+            watch: {
+                counter: function() {
+                    // 非同期処理の場合は thisが使えない
+                    // https://www.udemy.com/course/vue-js-complete-guide/learn/lecture/15371014#questions
+                    var vm = this;
+                    setTimeout(function(){
+                        vm.counter = 0;
+                    }, 3000)
+                }
+            }
+        })
+    </script>
+    
+</body>
+</html>
