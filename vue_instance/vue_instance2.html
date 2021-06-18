@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue-instance2</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <div id="app">
+        <p>{{ message }}</p>
+        <p>{{ name }}</p>
+        <p>{{ myData }}</p>
+    </div>
+    <div id="app2"></div>
+    <div id="app3"></div>
+
+    <script>
+        var data = {
+            message: 'こんばんは',
+            name: 'ゲスト2',
+        }
+
+        var vm = new Vue({
+            data: data,
+            computed: {
+                myData: function() {
+                    return this.$data;
+                }
+            }
+        })
+
+        // 後からelに値を入れるときに使う
+        vm.$mount('#app')
+        // trueが帰ってくるため、vmのdataプロパティとvarで定義されたdataは同一である
+        // console.log(data === vm.$data);
+        // console.log(vm)
+        new Vue({
+            data: {
+                name: 'ゲスト'
+            },
+            template: ' <p>こんにちは、{{ name }}さん</p>'
+        }).$mount('#app2')
+
+        new Vue({
+            data: {
+                name: 'ゲスト',
+            },
+            render: function(createElement) {
+                // 仮想DOMに,vnodeをreturnしている
+                console.log(createElement('h1', 'こんにちは、' + this.name))
+                return createElement('h1', 'こんにちは、' + this.name);
+            }
+        }).$mount('#app3')
+
+        // DOMを直接見る
+        var dir = document.createElement('div');
+        console.log(dir);
+        console.log(document);
+        console.dir(document);
+    </script>
+</body>
+</html>
