@@ -12,12 +12,27 @@
         <input type="text" v-model="message">
         <p>{{ message }}</p>
     </div>
+    <div id="app2">
+        <!-- v-model="inputData.title"と書けるが、v-modelの中身を見るために、以下のように書いてある -->
+        <input type="text" id="title" :value="inputData.title" @input="inputData.title = $event.target.value">
+        <label for="title">タイトル</label>
+        <p>{{ inputData.title }}</p>
+    </div>
     <script>
         new Vue({
             el: '#app',
             data: {
                 message: "helloworld"
             }  
+        })
+
+        new Vue({
+            el: "#app2",
+            data: {
+                inputData: {
+                    title: "タイトル",
+                }
+            }
         })
     </script>
 </body>
